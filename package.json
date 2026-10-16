@@ -1,13 +1,19 @@
 {
   "name": "taller_crud_usuarios",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CRUD de usuarios con Node.js, Express y JavaScript",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "node app.js"
   },
-  "keywords": [],
+  "keywords": [
+    "crud",
+    "usuarios",
+    "node",
+    "express",
+    "javascript"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",

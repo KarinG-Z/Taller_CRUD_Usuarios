@@ -8,12 +8,10 @@ let usuariosCargados = [];
 // ======================================================
 
 function mostrarMensaje(texto, tipo = "info") {
-
     const mensaje = document.getElementById("mensaje");
 
     mensaje.textContent = texto;
     mensaje.className = tipo;
-
 }
 
 
@@ -22,14 +20,12 @@ function mostrarMensaje(texto, tipo = "info") {
 // ======================================================
 
 function escaparHTML(valor) {
-
     return String(valor ?? "")
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
-
 }
 
 
@@ -38,9 +34,7 @@ function escaparHTML(valor) {
 // ======================================================
 
 async function listarUsuarios() {
-
     try {
-
         mostrarMensaje(
             "Consultando usuarios...",
             "info"
@@ -49,11 +43,9 @@ async function listarUsuarios() {
         const respuesta = await fetch(API_URL);
 
         if (!respuesta.ok) {
-
             throw new Error(
                 "No fue posible consultar los usuarios."
             );
-
         }
 
         const datos = await respuesta.json();
@@ -68,16 +60,13 @@ async function listarUsuarios() {
         );
 
     } catch (error) {
-
         console.error(error);
 
         mostrarMensaje(
             "Error al consultar los usuarios.",
             "error"
         );
-
     }
-
 }
 
 
@@ -86,98 +75,79 @@ async function listarUsuarios() {
 // ======================================================
 
 function mostrarUsuarios(lista) {
-
     const cuerpoTabla =
         document.getElementById("cuerpoTabla");
 
     const totalUsuarios =
         document.getElementById("totalUsuarios");
 
-
     totalUsuarios.textContent =
         `Total usuarios: ${lista.length}`;
 
-
     if (lista.length === 0) {
-
         cuerpoTabla.innerHTML = `
-      <tr>
-        <td
-          colspan="7"
-          class="sin-resultados"
-        >
-          No hay usuarios para mostrar.
-        </td>
-      </tr>
-    `;
+            <tr>
+                <td
+                    colspan="7"
+                    class="sin-resultados"
+                >
+                    No hay usuarios para mostrar.
+                </td>
+            </tr>
+        `;
 
         return;
-
     }
-
 
     let filas = "";
 
-
     lista.forEach(usuario => {
-
         filas += `
-      <tr>
+            <tr>
+                <td>${usuario.id}</td>
 
-        <td>
-          ${usuario.id}
-        </td>
+                <td>
+                    ${escaparHTML(usuario.nombre)}
+                </td>
 
-        <td>
-          ${escaparHTML(usuario.nombre)}
-        </td>
+                <td>
+                    ${escaparHTML(usuario.apellido)}
+                </td>
 
-        <td>
-          ${escaparHTML(usuario.apellido)}
-        </td>
+                <td>
+                    ${escaparHTML(usuario.correo)}
+                </td>
 
-        <td>
-          ${escaparHTML(usuario.correo)}
-        </td>
+                <td>
+                    ${escaparHTML(usuario.telefono)}
+                </td>
 
-        <td>
-          ${escaparHTML(usuario.telefono)}
-        </td>
+                <td>
+                    ${escaparHTML(usuario.rol)}
+                </td>
 
-        <td>
-          ${escaparHTML(usuario.rol)}
-        </td>
+                <td>
+                    <div class="acciones-tabla">
+                        <button
+                            class="btn-editar"
+                            onclick="cargarUsuario(${usuario.id})"
+                        >
+                            Editar
+                        </button>
 
-        <td>
-
-          <div class="acciones-tabla">
-
-            <button
-              class="btn-editar"
-              onclick="cargarUsuario(${usuario.id})"
-            >
-              Editar
-            </button>
-
-            <button
-              class="btn-eliminar"
-              onclick="eliminarUsuario(${usuario.id})"
-            >
-              Eliminar
-            </button>
-
-          </div>
-
-        </td>
-
-      </tr>
-    `;
-
+                        <button
+                            class="btn-eliminar"
+                            onclick="eliminarUsuario(${usuario.id})"
+                        >
+                            Eliminar
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `;
     });
 
-
     cuerpoTabla.innerHTML = filas;
-
 }
 
 
@@ -186,31 +156,23 @@ function mostrarUsuarios(lista) {
 // ======================================================
 
 async function buscarUsuarioPorId() {
-
     const id =
         document.getElementById("buscarId").value.trim();
 
-
     if (!id) {
-
         mostrarMensaje(
             "Ingrese un ID para realizar la búsqueda.",
             "error"
         );
 
         return;
-
     }
 
-
     try {
-
         const respuesta =
             await fetch(`${API_URL}/${id}`);
 
-
         if (respuesta.status === 404) {
-
             mostrarUsuarios([]);
 
             mostrarMensaje(
@@ -219,43 +181,32 @@ async function buscarUsuarioPorId() {
             );
 
             return;
-
         }
 
-
         if (!respuesta.ok) {
-
             throw new Error(
                 "Error al buscar el usuario."
             );
-
         }
-
 
         const usuario =
             await respuesta.json();
 
-
         mostrarUsuarios([usuario]);
-
 
         mostrarMensaje(
             "Usuario encontrado.",
             "exito"
         );
 
-
     } catch (error) {
-
         console.error(error);
 
         mostrarMensaje(
             "Error al buscar el usuario.",
             "error"
         );
-
     }
-
 }
 
 
@@ -265,13 +216,10 @@ async function buscarUsuarioPorId() {
 // ======================================================
 
 async function guardarUsuario() {
-
     const idUsuario =
         document.getElementById("idUsuario").value;
 
-
     const usuario = {
-
         nombre:
             document
                 .getElementById("nombre")
@@ -300,9 +248,7 @@ async function guardarUsuario() {
             document
                 .getElementById("rol")
                 .value
-
     };
-
 
     // VALIDACIONES OBLIGATORIAS
 
@@ -311,30 +257,22 @@ async function guardarUsuario() {
         !usuario.apellido ||
         !usuario.correo
     ) {
-
         mostrarMensaje(
             "Nombre, apellido y correo son obligatorios.",
             "error"
         );
 
         return;
-
     }
 
-
     if (idUsuario === "") {
-
         await crearUsuario(usuario);
-
     } else {
-
         await actualizarUsuario(
             idUsuario,
             usuario
         );
-
     }
-
 }
 
 
@@ -343,9 +281,7 @@ async function guardarUsuario() {
 // ======================================================
 
 async function crearUsuario(usuario) {
-
     try {
-
         const respuesta = await fetch(
             API_URL,
             {
@@ -359,13 +295,10 @@ async function crearUsuario(usuario) {
             }
         );
 
-
         const datos =
             await respuesta.json();
 
-
         if (!respuesta.ok) {
-
             mostrarMensaje(
                 datos.mensaje ||
                 "No se pudo registrar el usuario.",
@@ -373,9 +306,11 @@ async function crearUsuario(usuario) {
             );
 
             return;
-
         }
 
+        limpiarFormulario(false);
+
+        await listarUsuarios();
 
         mostrarMensaje(
             datos.mensaje ||
@@ -383,23 +318,14 @@ async function crearUsuario(usuario) {
             "exito"
         );
 
-
-        limpiarFormulario(false);
-
-        await listarUsuarios();
-
-
     } catch (error) {
-
         console.error(error);
 
         mostrarMensaje(
             "Error al registrar el usuario.",
             "error"
         );
-
     }
-
 }
 
 
@@ -408,25 +334,18 @@ async function crearUsuario(usuario) {
 // ======================================================
 
 async function cargarUsuario(id) {
-
     try {
-
         const respuesta =
             await fetch(`${API_URL}/${id}`);
 
-
         if (!respuesta.ok) {
-
             throw new Error(
                 "No fue posible cargar el usuario."
             );
-
         }
-
 
         const usuario =
             await respuesta.json();
-
 
         document.getElementById("idUsuario").value =
             usuario.id;
@@ -446,30 +365,24 @@ async function cargarUsuario(id) {
         document.getElementById("rol").value =
             usuario.rol;
 
-
         mostrarMensaje(
             `Editando usuario ID ${usuario.id}.`,
             "info"
         );
-
 
         window.scrollTo({
             top: 0,
             behavior: "smooth"
         });
 
-
     } catch (error) {
-
         console.error(error);
 
         mostrarMensaje(
             "Error al cargar el usuario.",
             "error"
         );
-
     }
-
 }
 
 
@@ -481,9 +394,7 @@ async function actualizarUsuario(
     id,
     usuario
 ) {
-
     try {
-
         const respuesta = await fetch(
             `${API_URL}/${id}`,
             {
@@ -497,13 +408,10 @@ async function actualizarUsuario(
             }
         );
 
-
         const datos =
             await respuesta.json();
 
-
         if (!respuesta.ok) {
-
             mostrarMensaje(
                 datos.mensaje ||
                 "No se pudo actualizar el usuario.",
@@ -511,9 +419,11 @@ async function actualizarUsuario(
             );
 
             return;
-
         }
 
+        limpiarFormulario(false);
+
+        await listarUsuarios();
 
         mostrarMensaje(
             datos.mensaje ||
@@ -521,23 +431,14 @@ async function actualizarUsuario(
             "exito"
         );
 
-
-        limpiarFormulario(false);
-
-        await listarUsuarios();
-
-
     } catch (error) {
-
         console.error(error);
 
         mostrarMensaje(
             "Error al actualizar el usuario.",
             "error"
         );
-
     }
-
 }
 
 
@@ -546,21 +447,15 @@ async function actualizarUsuario(
 // ======================================================
 
 async function eliminarUsuario(id) {
-
     const confirmado = confirm(
         "¿Está seguro de eliminar este usuario?"
     );
 
-
     if (!confirmado) {
-
         return;
-
     }
 
-
     try {
-
         const respuesta = await fetch(
             `${API_URL}/${id}`,
             {
@@ -568,13 +463,10 @@ async function eliminarUsuario(id) {
             }
         );
 
-
         const datos =
             await respuesta.json();
 
-
         if (!respuesta.ok) {
-
             mostrarMensaje(
                 datos.mensaje ||
                 "No se pudo eliminar el usuario.",
@@ -582,9 +474,9 @@ async function eliminarUsuario(id) {
             );
 
             return;
-
         }
 
+        await listarUsuarios();
 
         mostrarMensaje(
             datos.mensaje ||
@@ -592,21 +484,14 @@ async function eliminarUsuario(id) {
             "exito"
         );
 
-
-        await listarUsuarios();
-
-
     } catch (error) {
-
         console.error(error);
 
         mostrarMensaje(
             "Error al eliminar el usuario.",
             "error"
         );
-
     }
-
 }
 
 
@@ -617,7 +502,6 @@ async function eliminarUsuario(id) {
 function limpiarFormulario(
     limpiarMensaje = true
 ) {
-
     document.getElementById("idUsuario").value = "";
     document.getElementById("nombre").value = "";
     document.getElementById("apellido").value = "";
@@ -625,16 +509,12 @@ function limpiarFormulario(
     document.getElementById("telefono").value = "";
     document.getElementById("rol").value = "";
 
-
     if (limpiarMensaje) {
-
         mostrarMensaje(
             "Formulario limpiado.",
             "info"
         );
-
     }
-
 }
 
 
@@ -644,7 +524,6 @@ function limpiarFormulario(
 // ======================================================
 
 function aplicarFiltros() {
-
     const nombre =
         document
             .getElementById("buscarNombre")
@@ -652,35 +531,26 @@ function aplicarFiltros() {
             .toLowerCase()
             .trim();
 
-
     const rol =
         document
             .getElementById("filtroRol")
             .value;
 
-
     let lista =
         usuariosCargados.filter(usuario => {
-
             return usuario.nombre
                 .toLowerCase()
                 .includes(nombre);
-
         });
 
-
     if (rol !== "Todos") {
-
         lista = lista.filter(
             usuario =>
                 usuario.rol === rol
         );
-
     }
 
-
     mostrarUsuarios(lista);
-
 }
 
 
@@ -693,11 +563,9 @@ document
     .addEventListener(
         "submit",
         function (evento) {
-
             evento.preventDefault();
 
             guardarUsuario();
-
         }
     );
 
