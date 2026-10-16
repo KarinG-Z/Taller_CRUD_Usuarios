@@ -1,0 +1,571 @@
+/* ======================================================
+   VARIABLES
+====================================================== */
+
+:root {
+    --fondo: #f8f5fb;
+    --fondo-secundario: #f3edf8;
+
+    --blanco: #ffffff;
+
+    --morado: #76528f;
+    --morado-oscuro: #523864;
+    --morado-claro: #a988bd;
+
+    --rosa: #d889a5;
+    --rosa-claro: #f4dce5;
+
+    --verde: #6f9f8d;
+    --verde-oscuro: #527d6d;
+
+    --rojo: #cf6f78;
+    --rojo-oscuro: #ad515b;
+
+    --gris: #7c7281;
+    --gris-claro: #ece7ef;
+
+    --texto: #342b3a;
+    --texto-suave: #73697a;
+
+    --borde: #ddd4e2;
+
+    --sombra:
+        0 10px 30px rgba(88, 61, 105, 0.10);
+}
+
+
+/* ======================================================
+   GENERAL
+====================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    color: var(--texto);
+
+    background:
+        linear-gradient(135deg,
+            #faf7fc 0%,
+            #f4edf8 50%,
+            #fceff4 100%);
+}
+
+
+/* ======================================================
+   CONTENEDOR
+====================================================== */
+
+.contenedor {
+    width: min(1150px, 94%);
+    margin: 40px auto;
+}
+
+
+/* ======================================================
+   ENCABEZADO
+====================================================== */
+
+h1 {
+    margin: 0;
+
+    text-align: center;
+
+    color: var(--morado-oscuro);
+
+    font-size: 2.15rem;
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+.subtitulo {
+    margin-top: 8px;
+    margin-bottom: 28px;
+
+    text-align: center;
+
+    color: var(--texto-suave);
+
+    font-size: 1rem;
+}
+
+
+/* ======================================================
+   MENSAJES
+====================================================== */
+
+#mensaje {
+    min-height: 38px;
+
+    margin: 0 auto 18px;
+
+    padding: 9px 14px;
+
+    text-align: center;
+
+    font-weight: 600;
+
+    border-radius: 10px;
+}
+
+#mensaje:empty {
+    padding: 0;
+}
+
+#mensaje.exito {
+    color: #4f796a;
+    background: #eaf4ef;
+}
+
+#mensaje.error {
+    color: #a34855;
+    background: #fbecef;
+}
+
+#mensaje.info {
+    color: var(--morado);
+    background: #f0e9f5;
+}
+
+
+/* ======================================================
+   PANELES
+====================================================== */
+
+.panel {
+    position: relative;
+
+    margin-bottom: 24px;
+    padding: 25px;
+
+    background: rgba(255, 255, 255, 0.94);
+
+    border: 1px solid rgba(221, 212, 226, 0.8);
+    border-radius: 18px;
+
+    box-shadow: var(--sombra);
+}
+
+.panel::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 24px;
+
+    width: 55px;
+    height: 4px;
+
+    background:
+        linear-gradient(90deg,
+            var(--morado-claro),
+            var(--rosa));
+
+    border-radius: 0 0 5px 5px;
+}
+
+.panel h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    color: var(--morado-oscuro);
+
+    font-size: 1.35rem;
+}
+
+
+/* ======================================================
+   FORMULARIO
+====================================================== */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit,
+            minmax(190px, 1fr));
+
+    gap: 17px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    color: #4b3c53;
+
+    font-size: 0.94rem;
+    font-weight: 600;
+}
+
+input,
+select {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    font: inherit;
+
+    color: var(--texto);
+
+    background: #fdfcfe;
+
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+input::placeholder {
+    color: #aaa0af;
+}
+
+input:hover,
+select:hover {
+    border-color: var(--morado-claro);
+}
+
+input:focus,
+select:focus {
+    outline: none;
+
+    background: #ffffff;
+
+    border-color: var(--morado);
+
+    box-shadow:
+        0 0 0 3px rgba(118, 82, 143, 0.12);
+}
+
+
+/* ======================================================
+   BOTONES GENERALES
+====================================================== */
+
+button {
+    padding: 10px 17px;
+
+    font: inherit;
+    font-weight: 600;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(64, 44, 76, 0.14);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+
+/* ======================================================
+   BOTONES
+====================================================== */
+
+.btn-guardar {
+    color: white;
+
+    background:
+        linear-gradient(135deg,
+            var(--morado),
+            #9270a7);
+}
+
+.btn-guardar:hover {
+    background:
+        linear-gradient(135deg,
+            var(--morado-oscuro),
+            var(--morado));
+}
+
+
+.btn-limpiar {
+    color: var(--morado-oscuro);
+
+    background: var(--gris-claro);
+}
+
+.btn-limpiar:hover {
+    background: #ded5e3;
+}
+
+
+.btn-buscar {
+    color: white;
+
+    background:
+        linear-gradient(135deg,
+            #a277b7,
+            var(--morado));
+}
+
+
+.btn-todos {
+    color: white;
+
+    background: var(--verde);
+}
+
+.btn-todos:hover {
+    background: var(--verde-oscuro);
+}
+
+
+.btn-editar {
+    padding: 7px 11px;
+
+    color: #664459;
+
+    background: var(--rosa-claro);
+}
+
+.btn-editar:hover {
+    background: #ecc6d4;
+}
+
+
+.btn-eliminar {
+    padding: 7px 11px;
+
+    color: white;
+
+    background: var(--rojo);
+}
+
+.btn-eliminar:hover {
+    background: var(--rojo-oscuro);
+}
+
+
+/* ======================================================
+   ACCIONES
+====================================================== */
+
+.acciones {
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+
+/* ======================================================
+   BÚSQUEDA
+====================================================== */
+
+.busqueda {
+    display: flex;
+
+    gap: 10px;
+
+    align-items: flex-end;
+
+    flex-wrap: wrap;
+}
+
+.busqueda label {
+    flex: 1;
+
+    min-width: 220px;
+}
+
+
+/* ======================================================
+   FILTROS
+====================================================== */
+
+.filtros {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit,
+            minmax(220px, 1fr));
+
+    gap: 17px;
+
+    margin-bottom: 20px;
+}
+
+
+/* ======================================================
+   CONTADOR
+====================================================== */
+
+.contador {
+    display: inline-block;
+
+    margin-bottom: 15px;
+
+    padding: 7px 12px;
+
+    color: var(--morado-oscuro);
+
+    background: #f1eaf5;
+
+    border-radius: 20px;
+
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+
+/* ======================================================
+   TABLA
+====================================================== */
+
+.tabla-responsive {
+    overflow-x: auto;
+
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+
+    min-width: 850px;
+
+    border-collapse: collapse;
+
+    background: white;
+}
+
+th,
+td {
+    padding: 13px 12px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid #eee9f0;
+}
+
+th {
+    color: #584660;
+
+    background:
+        linear-gradient(180deg,
+            #f5eff8,
+            #eee6f3);
+
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+td {
+    color: #4c434f;
+
+    font-size: 0.94rem;
+}
+
+tbody tr {
+    transition: background 0.15s ease;
+}
+
+tbody tr:hover {
+    background: #fcf8fb;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ======================================================
+   ACCIONES TABLA
+====================================================== */
+
+.acciones-tabla {
+    display: flex;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+}
+
+
+/* ======================================================
+   SIN RESULTADOS
+====================================================== */
+
+.sin-resultados {
+    padding: 28px;
+
+    text-align: center;
+
+    color: var(--texto-suave);
+
+    background: #fdfbfd;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 700px) {
+
+    .contenedor {
+        width: 94%;
+        margin: 25px auto;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    .panel {
+        padding: 20px;
+    }
+
+    .busqueda {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .busqueda label {
+        min-width: 100%;
+    }
+
+    .acciones {
+        flex-direction: column;
+    }
+
+    .acciones button {
+        width: 100%;
+    }
+
+}

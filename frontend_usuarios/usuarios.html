@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CRUD de Usuarios</title>
+
+    <link rel="stylesheet" href="usuarios.css">
+
+</head>
+
+<body>
+
+    <main class="contenedor">
+
+        <h1>CRUD de Usuarios</h1>
+
+        <p class="subtitulo">
+            Consumo de API REST propia con JavaScript y Fetch
+        </p>
+
+
+        <!-- MENSAJES -->
+
+        <p id="mensaje"></p>
+
+
+        <!-- REGISTRAR / ACTUALIZAR -->
+
+        <section class="panel">
+
+            <h2>Registrar / Actualizar Usuario</h2>
+
+            <form id="formUsuario">
+
+                <input type="hidden" id="idUsuario">
+
+                <div class="form-grid">
+
+                    <label>
+                        Nombre
+                        <input type="text" id="nombre" placeholder="Nombre">
+                    </label>
+
+                    <label>
+                        Apellido
+                        <input type="text" id="apellido" placeholder="Apellido">
+                    </label>
+
+                    <label>
+                        Correo
+                        <input type="email" id="correo" placeholder="correo@ejemplo.com">
+                    </label>
+
+                    <label>
+                        Teléfono
+                        <input type="text" id="telefono" placeholder="3001234567">
+                    </label>
+
+                    <label>
+                        Rol
+
+                        <select id="rol">
+
+                            <option value="">
+                                Seleccione
+                            </option>
+
+                            <option value="Administrador">
+                                Administrador
+                            </option>
+
+                            <option value="Cliente">
+                                Cliente
+                            </option>
+
+                        </select>
+                    </label>
+
+                </div>
+
+                <div class="acciones">
+
+                    <button type="submit" class="btn-guardar">
+                        Guardar Usuario
+                    </button>
+
+                    <button type="button" class="btn-limpiar" onclick="limpiarFormulario()">
+                        Limpiar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- BUSCAR POR ID -->
+
+        <section class="panel">
+
+            <h2>Buscar Usuario</h2>
+
+            <div class="busqueda">
+
+                <label>
+                    ID del usuario
+
+                    <input type="number" id="buscarId" min="1" placeholder="Ejemplo: 1">
+                </label>
+
+                <button type="button" class="btn-buscar" onclick="buscarUsuarioPorId()">
+                    Buscar
+                </button>
+
+                <button type="button" class="btn-todos" onclick="listarUsuarios()">
+                    Mostrar Todos
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- LISTA -->
+
+        <section class="panel">
+
+            <h2>Lista de Usuarios</h2>
+
+            <!-- RETOS ADICIONALES -->
+
+            <div class="filtros">
+
+                <label>
+                    Buscar por nombre
+
+                    <input type="text" id="buscarNombre" placeholder="Buscar...">
+                </label>
+
+                <label>
+                    Filtrar por rol
+
+                    <select id="filtroRol">
+
+                        <option value="Todos">
+                            Todos
+                        </option>
+
+                        <option value="Administrador">
+                            Administrador
+                        </option>
+
+                        <option value="Cliente">
+                            Cliente
+                        </option>
+
+                    </select>
+
+                </label>
+
+            </div>
+
+
+            <div id="totalUsuarios" class="contador">
+                Total usuarios: 0
+            </div>
+
+
+            <div class="tabla-responsive">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="cuerpoTabla"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="usuarios.js"></script>
+
+</body>
+
+</html>

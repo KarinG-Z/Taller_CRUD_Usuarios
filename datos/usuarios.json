@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "nombre": "Simón",
+    "apellido": "López",
+    "correo": "simon@gmail.com",
+    "telefono": "3001234567",
+    "rol": "Administrador"
+  },
+  {
+    "id": 2,
+    "nombre": "Karin",
+    "apellido": "Gutiérrez",
+    "correo": "karin@gmail.com",
+    "telefono": "3136312413",
+    "rol": "Cliente"
+  },
+  {
+    "id": 3,
+    "nombre": "Antonella",
+    "apellido": "Gutiérrez",
+    "correo": "antonella@gmail.com",
+    "telefono": "3154445566",
+    "rol": "Cliente"
+  }
+]
