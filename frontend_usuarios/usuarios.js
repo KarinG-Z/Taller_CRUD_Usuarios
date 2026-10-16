@@ -35,11 +35,6 @@ function escaparHTML(valor) {
 
 async function listarUsuarios() {
     try {
-        mostrarMensaje(
-            "Consultando usuarios...",
-            "info"
-        );
-
         const respuesta = await fetch(API_URL);
 
         if (!respuesta.ok) {
@@ -54,10 +49,7 @@ async function listarUsuarios() {
 
         mostrarUsuarios(usuariosCargados);
 
-        mostrarMensaje(
-            "Usuarios cargados correctamente.",
-            "exito"
-        );
+        return true;
 
     } catch (error) {
         console.error(error);
@@ -66,6 +58,7 @@ async function listarUsuarios() {
             "Error al consultar los usuarios.",
             "error"
         );
+        return false;
     }
 }
 
@@ -87,10 +80,7 @@ function mostrarUsuarios(lista) {
     if (lista.length === 0) {
         cuerpoTabla.innerHTML = `
             <tr>
-                <td
-                    colspan="7"
-                    class="sin-resultados"
-                >
+                <td colspan="7" class="sin-resultados">
                     No hay usuarios para mostrar.
                 </td>
             </tr>
@@ -104,7 +94,10 @@ function mostrarUsuarios(lista) {
     lista.forEach(usuario => {
         filas += `
             <tr>
-                <td>${usuario.id}</td>
+
+                <td>
+                    ${usuario.id}
+                </td>
 
                 <td>
                     ${escaparHTML(usuario.nombre)}
@@ -128,7 +121,9 @@ function mostrarUsuarios(lista) {
 
                 <td>
                     <div class="acciones-tabla">
+
                         <button
+                            type="button"
                             class="btn-editar"
                             onclick="cargarUsuario(${usuario.id})"
                         >
@@ -136,13 +131,16 @@ function mostrarUsuarios(lista) {
                         </button>
 
                         <button
+                            type="button"
                             class="btn-eliminar"
                             onclick="eliminarUsuario(${usuario.id})"
                         >
                             Eliminar
                         </button>
+
                     </div>
                 </td>
+
             </tr>
         `;
     });
@@ -157,7 +155,10 @@ function mostrarUsuarios(lista) {
 
 async function buscarUsuarioPorId() {
     const id =
-        document.getElementById("buscarId").value.trim();
+        document
+            .getElementById("buscarId")
+            .value
+            .trim();
 
     if (!id) {
         mostrarMensaje(
@@ -211,13 +212,15 @@ async function buscarUsuarioPorId() {
 
 
 // ======================================================
-// GUARDAR
+// GUARDAR USUARIO
 // DECIDE ENTRE POST Y PUT
 // ======================================================
 
 async function guardarUsuario() {
     const idUsuario =
-        document.getElementById("idUsuario").value;
+        document
+            .getElementById("idUsuario")
+            .value;
 
     const usuario = {
         nombre:
@@ -250,7 +253,10 @@ async function guardarUsuario() {
                 .value
     };
 
+
+    // ==================================================
     // VALIDACIONES OBLIGATORIAS
+    // ==================================================
 
     if (
         !usuario.nombre ||
@@ -264,6 +270,7 @@ async function guardarUsuario() {
 
         return;
     }
+
 
     if (idUsuario === "") {
         await crearUsuario(usuario);
@@ -298,6 +305,7 @@ async function crearUsuario(usuario) {
         const datos =
             await respuesta.json();
 
+
         if (!respuesta.ok) {
             mostrarMensaje(
                 datos.mensaje ||
@@ -308,12 +316,15 @@ async function crearUsuario(usuario) {
             return;
         }
 
+
         limpiarFormulario(false);
 
-        await listarUsuarios();
+        if (!(await listarUsuarios())) {
+            return;
+        }
+
 
         mostrarMensaje(
-            datos.mensaje ||
             "Usuario registrado correctamente.",
             "exito"
         );
@@ -347,6 +358,7 @@ async function cargarUsuario(id) {
         const usuario =
             await respuesta.json();
 
+
         document.getElementById("idUsuario").value =
             usuario.id;
 
@@ -365,10 +377,12 @@ async function cargarUsuario(id) {
         document.getElementById("rol").value =
             usuario.rol;
 
+
         mostrarMensaje(
             `Editando usuario ID ${usuario.id}.`,
             "info"
         );
+
 
         window.scrollTo({
             top: 0,
@@ -411,6 +425,7 @@ async function actualizarUsuario(
         const datos =
             await respuesta.json();
 
+
         if (!respuesta.ok) {
             mostrarMensaje(
                 datos.mensaje ||
@@ -421,12 +436,15 @@ async function actualizarUsuario(
             return;
         }
 
+
         limpiarFormulario(false);
 
-        await listarUsuarios();
+        if (!(await listarUsuarios())) {
+            return;
+        }
+
 
         mostrarMensaje(
-            datos.mensaje ||
             "Usuario actualizado correctamente.",
             "exito"
         );
@@ -451,9 +469,11 @@ async function eliminarUsuario(id) {
         "¿Está seguro de eliminar este usuario?"
     );
 
+
     if (!confirmado) {
         return;
     }
+
 
     try {
         const respuesta = await fetch(
@@ -466,6 +486,7 @@ async function eliminarUsuario(id) {
         const datos =
             await respuesta.json();
 
+
         if (!respuesta.ok) {
             mostrarMensaje(
                 datos.mensaje ||
@@ -476,10 +497,13 @@ async function eliminarUsuario(id) {
             return;
         }
 
-        await listarUsuarios();
+
+        if (!(await listarUsuarios())) {
+            return;
+        }
+
 
         mostrarMensaje(
-            datos.mensaje ||
             "Usuario eliminado correctamente.",
             "exito"
         );
@@ -509,6 +533,7 @@ function limpiarFormulario(
     document.getElementById("telefono").value = "";
     document.getElementById("rol").value = "";
 
+
     if (limpiarMensaje) {
         mostrarMensaje(
             "Formulario limpiado.",
@@ -520,7 +545,7 @@ function limpiarFormulario(
 
 // ======================================================
 // RETO ADICIONAL
-// BUSCAR POR NOMBRE CON filter()
+// BUSCAR POR NOMBRE Y FILTRAR POR ROL
 // ======================================================
 
 function aplicarFiltros() {
@@ -531,10 +556,12 @@ function aplicarFiltros() {
             .toLowerCase()
             .trim();
 
+
     const rol =
         document
             .getElementById("filtroRol")
             .value;
+
 
     let lista =
         usuariosCargados.filter(usuario => {
@@ -543,12 +570,14 @@ function aplicarFiltros() {
                 .includes(nombre);
         });
 
+
     if (rol !== "Todos") {
         lista = lista.filter(
             usuario =>
                 usuario.rol === rol
         );
     }
+
 
     mostrarUsuarios(lista);
 }
@@ -587,7 +616,7 @@ document
 
 
 // ======================================================
-// CARGAR AL ABRIR LA PÁGINA
+// CARGAR USUARIOS AL ABRIR LA PÁGINA
 // ======================================================
 
 listarUsuarios();
